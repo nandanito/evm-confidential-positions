@@ -1,0 +1,159 @@
+================================================================================
+ STUDY ON A LOCAL DEVNET. NOT FOR VALUE.
+ - The Groth16 verifiers use Zeto's shipped UNSAFE test keys (no phase-2 setup;
+   delta = gamma). They give no soundness for real value (CLAIMS.md E-5, P-2).
+ - Each Paladin node holds every key and all plaintext for its desks (E-8, P-10).
+ - The submitter EOA, timing, gas and note count are public (F-1, P-4, P-6).
+ - No public audit of Zeto or Paladin was found in the searched corpus (E-11).
+================================================================================
+
+--------------------------------------------------------------------------------
+0. Chain and source
+--------------------------------------------------------------------------------
+  base ledger   http://localhost:31545  chainId=1337  client=besu/v25.8.0/linux-aarch_64/openjdk-java-21  head=#4937
+  paladin node  node1 http://localhost:31548
+  paladin node  node2 http://localhost:31648
+  paladin node  node3 http://localhost:31748
+  Paladin v1.0.0 pins Zeto v0.2.2 (CLAIMS E-2); the ABIs used to decode are the v0.2.2 ones.
+  The Paladin version is not re-read by this script; E-3 records the install.
+  parties       issuer=centraldesk@node3  deskA=deskA@node1  deskB=deskB@node2
+
+--------------------------------------------------------------------------------
+1. Adversarial control — a second spend of an already-spent note (arm a)
+--------------------------------------------------------------------------------
+  A fresh control token; desk A spends one note to desk B; then the SAME mined
+  transfer (the node's own valid proof, unmodified) is resubmitted from a fresh EOA.
+  control token 0x7f89897c50d72b4e891ae6c3aad22b1642dee22a (Zeto_AnonNullifier)
+  C0 mined      0x9316ccf6cf608781dde87f1796aa0226aa09dcff7daed03d31eb8a03eb1f2651  real nullifiers=1
+  replay        0xfdf80cac8b217b38974ad15c1c629d68f69c2a798eae8ccd849b42cfd732b7ca from 0x92393552d1389B360Bf62bEAaC70D1fd463f42F1
+  simulated     UTXOAlreadySpent(2077772566…252146)
+  mined         status=0 logs=0 block=#4941
+  PASS  [1] replay of a spent note is rejected on chain with UTXOAlreadySpent(its nullifier), status 0, root unchanged
+  PASS  [1] no desk was credited twice: A=9900, B=100 after the replay
+        A=9900 B=100
+
+--------------------------------------------------------------------------------
+2. Deploy + mint — Zeto_AnonNullifier (primary) and Zeto_Anon (linkability foil)
+--------------------------------------------------------------------------------
+  Zeto_AnonNullifier  token 0xb48652241d8ef2dee9606794fe60568334ecc552  mint 0xd57a4957809f70f8867320ebe5ae75312f3e2f60a5ebb71933283af9bf5c64da
+    mint caller (public)  0xE0cA21cCc6F653322D8C4EC78B45Dfd645a3d2F0   outputs on chain: 1 commitment(s) (amount: see the §4 plaintext check)
+  Zeto_Anon           token 0x23f4c1529298746f01e4f72fd0c81579c02ad839  mint 0x3973e2f7ff828c30b025bc99415d97ff23451f82a9785abde0697318f1c6d8a0
+    mint caller (public)  0xE0cA21cCc6F653322D8C4EC78B45Dfd645a3d2F0   outputs on chain: 1 commitment(s) (amount: see the §4 plaintext check)
+
+--------------------------------------------------------------------------------
+3. Confidential transfers — T1, T2: A -> B; T3: B -> A spending both of B's notes
+--------------------------------------------------------------------------------
+  Zeto_AnonNullifier  T1 deskA->deskB  0xe23976b44d53334aa6650c100588c075092e40645466d7ba12702facc3b16915  block #4947
+  Zeto_AnonNullifier  T2 deskA->deskB  0x0def29602f804fe2456226b3b853be2a48d31ce43e296f2f57aaba0294cc3b86  block #4950
+  Zeto_AnonNullifier  T3 deskB->deskA  0x77d416142275424f405c85399474db57a28f643bf4bb492cba51ec30ae42b6ac  block #4957
+  Zeto_Anon           T1 deskA->deskB  0xecedb6be8f41ccd8f7470450d5003c253c1bf206e7c19f6c88e8878dfeb2e8b4  block #4959
+  Zeto_Anon           T2 deskA->deskB  0xd26b8ba146b75d66884caf1fbf2773790c36dff8af2007db7b55a3cc7cdc6e2c  block #4961
+  Zeto_Anon           T3 deskB->deskA  0xcf88c14c69eeb8b75695b846929fcb0882ce255067b80376c2ceee7d0476cd69  block #4962
+  node domain receipt: PD011206: DOMAIN zeto returned error: PD210102: Not implemented. See state receipt for coin transfers  (CLAIMS F-6; the state lists are used instead)
+
+--------------------------------------------------------------------------------
+4. Boundary leaks, run on purpose (arm c) and the linkability probe (arm b)
+--------------------------------------------------------------------------------
+
+  Zeto_AnonNullifier
+  tx    submitter EOA (public, indexed)          real in/pad  real out/pad  block time  gasUsed
+  MINT  0xE0cA21cCc6F653322D8C4EC78B45Dfd645a3d2F0  0/0          1/0           1790494981  396399
+  PASS  [4c] Zeto_AnonNullifier MINT: submitter in the event equals tx.from and is an indexed topic
+  T1    0xafc9AA2D1ab0AcE9EbEB839b6274E5040Bc29C8c  1/1          2/0           1790494998  1486600
+  PASS  [4c] Zeto_AnonNullifier T1: submitter in the event equals tx.from and is an indexed topic
+  PASS  [4c] Zeto_AnonNullifier T1: zero padding reveals the real note count (1 in, 2 out), matching the node's receipt
+        node spent=1
+  T2    0xafc9AA2D1ab0AcE9EbEB839b6274E5040Bc29C8c  1/1          2/0           1790495020  2308044
+  PASS  [4c] Zeto_AnonNullifier T2: submitter in the event equals tx.from and is an indexed topic
+  PASS  [4c] Zeto_AnonNullifier T2: zero padding reveals the real note count (1 in, 2 out), matching the node's receipt
+        node spent=1
+  T3    0x9B9277d592844eF7Af5330eB4789af4cCdEc5749  2/0          2/0           1790495087  1568849
+  PASS  [4c] Zeto_AnonNullifier T3: submitter in the event equals tx.from and is an indexed topic
+  PASS  [4c] Zeto_AnonNullifier T3: zero padding reveals the real note count (2 in, 2 out), matching the node's receipt
+        node spent=2
+  transfer gas, observed in this run (data-dependent, E-10): 1486600 · 2308044 · 1568849  range 1486600–2308044
+  PASS  [4c] Zeto_AnonNullifier: every tx's block timestamp is public and non-decreasing
+        timestamps 1790494981, 1790494998, 1790495020, 1790495087
+  observation: T1 and T2 (both desk A) were submitted by the SAME EOA — an observer can group them by sender node (per-epoch submit key, E-8)
+  PASS  [4c] Zeto_AnonNullifier: no amount or owner key (13 secrets) appears as a plain 32-byte word in any calldata, log data or topic
+
+  Zeto_Anon
+  tx    submitter EOA (public, indexed)          real in/pad  real out/pad  block time  gasUsed
+  MINT  0xE0cA21cCc6F653322D8C4EC78B45Dfd645a3d2F0  0/0          1/0           1790494985  60267
+  PASS  [4c] Zeto_Anon MINT: submitter in the event equals tx.from and is an indexed topic
+  T1    0xE921A063eA520d7B5a9104D14072a90Ad8965b99  1/1          2/0           1790495099  321679
+  PASS  [4c] Zeto_Anon T1: submitter in the event equals tx.from and is an indexed topic
+  PASS  [4c] Zeto_Anon T1: zero padding reveals the real note count (1 in, 2 out), matching the node's receipt
+        node spent=1
+  T2    0xE921A063eA520d7B5a9104D14072a90Ad8965b99  1/1          2/0           1790495110  321643
+  PASS  [4c] Zeto_Anon T2: submitter in the event equals tx.from and is an indexed topic
+  PASS  [4c] Zeto_Anon T2: zero padding reveals the real note count (1 in, 2 out), matching the node's receipt
+        node spent=1
+  T3    0xF330133eE086cB1e125008B331ae0d56b08CF13d  2/0          2/0           1790495116  330854
+  PASS  [4c] Zeto_Anon T3: submitter in the event equals tx.from and is an indexed topic
+  PASS  [4c] Zeto_Anon T3: zero padding reveals the real note count (2 in, 2 out), matching the node's receipt
+        node spent=2
+  transfer gas, observed in this run (data-dependent, E-10): 321679 · 321643 · 330854  range 321643–330854
+  PASS  [4c] Zeto_Anon: every tx's block timestamp is public and non-decreasing
+        timestamps 1790494985, 1790495099, 1790495110, 1790495116
+  observation: T1 and T2 (both desk A) were submitted by the SAME EOA — an observer can group them by sender node (per-epoch submit key, E-8)
+  PASS  [4c] Zeto_Anon: no amount or owner key (13 secrets) appears as a plain 32-byte word in any calldata, log data or topic
+
+  Linkability probe (arm b): does any later on-chain input equal an earlier on-chain output?
+  PASS  [4b] Zeto_AnonNullifier: ground truth is non-vacuous — desk B's node reports T3 spent its notes from T1 and T2
+        true spends from T1, T2
+  Zeto_AnonNullifier: 0 equality link(s)
+  PASS  [4b] Zeto_AnonNullifier: no on-chain value equality links T3 (or any tx) to the notes it spent — nullifiers, not commitments, are published
+  PASS  [4b] Zeto_Anon: ground truth is non-vacuous — desk B's node reports T3 spent its notes from T1 and T2
+        true spends from T1, T2
+  Zeto_Anon: 4 equality link(s): MINT->T1, T1->T2, T1->T3, T2->T3
+  PASS  [4b] Zeto_Anon (foil): T3's inputs ARE the commitments T1 and T2 created — linkable on chain
+        T3 links: 5867850550…127672, 9392443583…211115
+  Not tested by this probe: correlation by submitter EOA, timing, note count or gas (all public,
+  above). The anonymity set of a nullifier spend is the tree's contents, here a handful of notes.
+
+--------------------------------------------------------------------------------
+5. Reconciliation — book vs each desk's node vs on-chain commitments
+--------------------------------------------------------------------------------
+  PASS  [5] Zeto_AnonNullifier: deskA's node balance equals the book (99800)
+        node says 99800 in 2 note(s)
+  PASS  [5] Zeto_AnonNullifier: deskB's node balance equals the book (200)
+        node says 200 in 1 note(s)
+  PASS  [5] Zeto_AnonNullifier: positions are conserved — desk balances sum to the 100000 minted
+        sum=100000
+  PASS  [5] Zeto_AnonNullifier: live on-chain commitments (3) = notes the desks' nodes hold (3)
+  PASS  [5] Zeto_AnonNullifier: every live commitment opens (node-private) to a coin, and the openings sum to the mint
+        sum of openings=100000
+  PASS  [5] Zeto_Anon: deskA's node balance equals the book (99800)
+        node says 99800 in 2 note(s)
+  PASS  [5] Zeto_Anon: deskB's node balance equals the book (200)
+        node says 200 in 1 note(s)
+  PASS  [5] Zeto_Anon: positions are conserved — desk balances sum to the 100000 minted
+        sum=100000
+  PASS  [5] Zeto_Anon: live on-chain commitments (3) = notes the desks' nodes hold (3)
+  PASS  [5] Zeto_Anon: every live commitment opens (node-private) to a coin, and the openings sum to the mint
+        sum of openings=100000
+
+--------------------------------------------------------------------------------
+6. Observer view — tools/observer/lib.ts on T3 (Zeto_AnonNullifier)
+--------------------------------------------------------------------------------
+  PUBLIC (any full-chain observer):
+    submitter EOA 0x9B9277d592844eF7Af5330eB4789af4cCdEc5749  -> contract 0xb48652241d8EF2deE9606794fe60568334EcC552  nonce 0
+    block #4957 time 1790495087  gasUsed 1568849 (observed in this run, data-dependent)  calldata 772 B
+    method transfer(uint256[],uint256[],uint256,(uint256[2],uint256[2][2],uint256[2]),bytes)
+    nullifiers 4220861946…779342, 9359554881…446628
+    outputs    1588337253…078505, 1418072720…991728
+    plus the SMT root, the Groth16 proof (8 field elements) and the data blob
+  NODE-PRIVATE (desk B's node; not on chain):
+    spent   0x0acd307f…e9ee17  amount 1000  owner 0x6972919f…205902
+    spent   0x2de6a85b…60b66f  amount 700  owner 0x6972919f…205902
+    created 0x231dab97…332669  amount 1500  owner 0x27f3c303…a4ed2c
+    created 0x1f5a01d5…07e170  amount 200  owner 0x6972919f…205902
+  full observation (raw tx/receipt/block + decoded) -> /Users/nandan/Development/side-projects/evm-confidential-positions/example/out/observer-T3-anonnullifier.json
+  PASS  [6] observer output: T3 decoded against the v0.2.2 ABI, status 1, tx.to is the token
+
+--------------------------------------------------------------------------------
+Summary
+--------------------------------------------------------------------------------
+  35/35 checks passed.
+  What this run does NOT show is listed in example/README.md (what is NOT hidden / NOT demonstrated).

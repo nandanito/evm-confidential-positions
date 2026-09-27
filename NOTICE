@@ -1,0 +1,16 @@
+evm-confidential-positions
+Copyright 2026 Nandan
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This repository includes material from third parties, under their own licences:
+
+- tools/observer/abi/*.json are contract ABIs from Zeto v0.2.2
+  (https://github.com/LFDT-Paladin/zeto, release asset zeto-contracts-v0.2.2.tar.gz),
+  Apache License 2.0.
+
+Paladin (https://github.com/LFDT-Paladin/paladin), including its Noto domain, and Zeto are
+Apache License 2.0 (checked with `gh api repos/LFDT-Paladin/{paladin,zeto}` and the Noto
+source's SPDX headers, 2026-09-27). Neither project ships a NOTICE file. Their code is used
+as npm dependencies or fetched at run time into the git-ignored artifacts/, and is not
+redistributed here except as listed above.

@@ -1,0 +1,2 @@
+attempt 1: Zeto_Anon T3 (deskB@node2): paladin tx c4dbac74-f5f7-43a2-a9df-b1981ab9cb2a created 2026-09-27T10:15:52.361137508Z; success=true base-ledger tx 0x57d0fa78d91a524b952f24d9ab039198e8857379decdc6b4cf4ddab24fcde716 block 5934 at 2026-09-27T10:18:56.000Z (3.1 min after creation)
+attempt 2: Zeto_AnonNullifier T1 (deskA@node1): paladin tx e4c1030d-0c4f-4d41-9de9-1ac3e5bbdebd created 2026-09-27T10:21:46.452512053Z; success=true base-ledger tx 0xdd28370325cd98641257c9072279694ba0b34120f0b9a9ebc777e57d454fd77a block 5991 at 2026-09-27T10:27:47.000Z (6.0 min after creation)

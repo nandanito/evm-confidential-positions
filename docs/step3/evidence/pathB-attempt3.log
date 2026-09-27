@@ -1,0 +1,52 @@
+================================================================================
+ STUDY ON A LOCAL DEVNET. NOT FOR VALUE.
+ - The Groth16 verifiers use Zeto's shipped UNSAFE test keys (no phase-2 setup;
+   delta = gamma). They give no soundness for real value (CLAIMS.md E-5, P-2).
+ - Each Paladin node holds every key and all plaintext for its desks (E-8, P-10).
+ - The submitter EOA, timing, gas and note count are public (F-1, P-4, P-6).
+ - No public audit of Zeto or Paladin was found in the searched corpus (E-11).
+================================================================================
+
+--------------------------------------------------------------------------------
+0. Chain and source
+--------------------------------------------------------------------------------
+  base ledger   http://localhost:31545  chainId=1337  client=besu/v25.8.0/linux-aarch_64/openjdk-java-21  head=#5993
+  paladin node  node1 http://localhost:31548
+  paladin node  node2 http://localhost:31648
+  paladin node  node3 http://localhost:31748
+  Paladin v1.0.0 pins Zeto v0.2.2 (CLAIMS E-2); the ABIs used to decode are the v0.2.2 ones.
+  The Paladin version is not re-read by this script; E-3 records the install.
+  parties       issuer=centraldesk@node3  deskA=deskA@node1  deskB=deskB@node2
+
+--------------------------------------------------------------------------------
+1. Adversarial control — a second spend of an already-spent note (arm a)
+--------------------------------------------------------------------------------
+  A fresh control token; desk A spends one note to desk B; then the SAME mined
+  transfer (the node's own valid proof, unmodified) is resubmitted from a fresh EOA.
+
+ERROR: Error: socket hang up
+    at AxiosError.from (/Users/nandan/Development/side-projects/evm-confidential-positions/node_modules/axios/dist/node/axios.cjs:1577:24)
+    at RedirectableRequest.handleRequestError (/Users/nandan/Development/side-projects/evm-confidential-positions/node_modules/axios/dist/node/axios.cjs:4792:25)
+    at RedirectableRequest.emit (node:events:519:28)
+    at eventHandlers.<computed> (/Users/nandan/Development/side-projects/evm-confidential-positions/node_modules/follow-redirects/index.js:56:24)
+    at ClientRequest.emit (node:events:519:28)
+    at emitErrorEvent (node:_http_client:108:11)
+    at Socket.socketOnEnd (node:_http_client:599:5)
+    at Socket.emit (node:events:531:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:89:21)
+    at Axios.request (/Users/nandan/Development/side-projects/evm-confidential-positions/node_modules/axios/dist/node/axios.cjs:6308:43)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async PaladinClient.post (/Users/nandan/Development/side-projects/evm-confidential-positions/node_modules/@lfdecentralizedtrust/paladin-sdk/build/paladin.js:534:19)
+    at async Object.sendTransaction (/Users/nandan/Development/side-projects/evm-confidential-positions/node_modules/@lfdecentralizedtrust/paladin-sdk/build/paladin.js:59:29)
+    at async ZetoFuture.waitForReceipt (/Users/nandan/Development/side-projects/evm-confidential-positions/node_modules/@lfdecentralizedtrust/paladin-sdk/build/transaction.js:14:44)
+    at async ZetoFuture.waitForDeploy (/Users/nandan/Development/side-projects/evm-confidential-positions/node_modules/@lfdecentralizedtrust/paladin-sdk/build/domains/zeto.js:44:25)
+    at async Function.deploy (/Users/nandan/Development/side-projects/evm-confidential-positions/example/src/paladin.ts:87:18)
+    at async main (/Users/nandan/Development/side-projects/evm-confidential-positions/example/run.ts:72:19)
+    at async <anonymous> (/Users/nandan/Development/side-projects/evm-confidential-positions/example/run.ts:245:3)
+
+--------------------------------------------------------------------------------
+Summary
+--------------------------------------------------------------------------------
+  0/0 checks passed; the run CRASHED before finishing.
+  What this run does NOT show is listed in example/README.md (what is NOT hidden / NOT demonstrated).

@@ -1,0 +1,32 @@
+{
+  "name": "evm-confidential-positions",
+  "private": true,
+  "license": "Apache-2.0",
+  "type": "module",
+  "scripts": {
+    "check:disclosure": "tsx tools/check-disclosure.ts",
+    "counts": "tsx tools/counts.ts",
+    "check:counts": "tsx tools/counts.ts --check",
+    "test": "node --import tsx --test tools/check-disclosure.test.ts example/tests/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm run check:disclosure && npm test && npm run check:counts",
+    "example": "tsx example/run.ts",
+    "setup:auditor": "bash tools/fetch-zeto-v0.2.2.sh",
+    "example:auditor": "tsx example/run-auditor.ts"
+  },
+  "dependencies": {
+    "@iden3/js-merkletree": "1.5.1",
+    "@lfdecentralizedtrust/paladin-sdk": "1.0.0",
+    "@openzeppelin/contracts": "5.4.0",
+    "circomlibjs": "0.1.7",
+    "ethers": "6.13.4",
+    "maci-crypto": "1.1.1",
+    "poseidon-lite": "0.3.0",
+    "snarkjs": "0.7.5"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.4",
+    "tsx": "4.19.2",
+    "typescript": "5.6.3"
+  }
+}

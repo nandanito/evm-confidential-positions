@@ -1,0 +1,12 @@
+node_modules/
+*.wtns
+*.zkey
+*.ptau
+tools/observer/node_modules/
+.DS_Store
+tools/observer/artifacts/
+artifacts/
+
+# Keep F-2 evidence witnesses under private/ (private repo only; excluded from the public export)
+!private/**/*.wtns
+!private/**/*.zkey

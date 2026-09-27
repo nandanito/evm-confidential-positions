@@ -1,0 +1,380 @@
+{
+  "date": "2026-09-27T10:30:39.042Z",
+  "besuRpc": "http://localhost:31545",
+  "zeto": {
+    "tag": "v0.2.2",
+    "commit": "5539a36487b004219a47642c2b32110df1b807db"
+  },
+  "chain": {
+    "chainId": "1337",
+    "client": "besu/v25.8.0/linux-aarch_64/openjdk-java-21"
+  },
+  "deployment": {
+    "proxy": "0xf717682420b1cc8508b7a513ca70ad1ea034eb08",
+    "implementation": "0xa00d7a18810c06b44bab4485865f76a05b28eb8c",
+    "verifier": "0xc8e1e6cd0e6a1b909265721e09d51e230acf2a33",
+    "libraries": {
+      "PoseidonUnit2L": "0x1424545d66e2731d8a4ee6a89d807c0038ac4783",
+      "PoseidonUnit3L": "0x66a74efaa8374e43a302863a64df41c4e35b4476",
+      "SmtLib": "0xc6d57fd0732ddc4452e95bd508cd964d7b66308b"
+    },
+    "txs": [
+      {
+        "what": "PoseidonUnit2L",
+        "hash": "0x59a443d441835f8e4fe9f94a662bca28d2cf4ab5a496678175f69ad7d2291911",
+        "gasUsed": "2157126"
+      },
+      {
+        "what": "PoseidonUnit3L",
+        "hash": "0x3811f43c59137f42f609b7948740c796083cfe2df15408170cba2232bac250da",
+        "gasUsed": "2745274"
+      },
+      {
+        "what": "SmtLib",
+        "hash": "0x96734a56b905281d9cc0ccfa4d1e065fb36195b9703a5edc3d86fc611adf6ac4",
+        "gasUsed": "2012368"
+      },
+      {
+        "what": "Groth16Verifier_AnonEncNullifierNonRepudiation",
+        "hash": "0xf98d411bac818ff451bfc98a41ce5f64e79567e686dd736749b43a724e5e52dc",
+        "gasUsed": "1065023"
+      },
+      {
+        "what": "Groth16Verifier_AnonEncNullifierNonRepudiationBatch",
+        "hash": "0xd1a7896de1523786c4c7ae3a4dd983ce3d7dd2549054f69be3c26217dac97cca",
+        "gasUsed": "3197765"
+      },
+      {
+        "what": "Groth16Verifier_Deposit",
+        "hash": "0x1005c0e675782104e81a15a7b393688267b98a38dd60b135ff68a8e95e9d338f",
+        "gasUsed": "390449"
+      },
+      {
+        "what": "Groth16Verifier_WithdrawNullifier",
+        "hash": "0xf44b7444fac3d85e6366e224963fded0319acf7b0ac7cfab5728bee0d41712ef",
+        "gasUsed": "470792"
+      },
+      {
+        "what": "Groth16Verifier_WithdrawNullifierBatch",
+        "hash": "0xe0b9b5790ce9fb0b089324bfe8c892655a8553d01b2b8d0130266dc0a70f5f3d",
+        "gasUsed": "798555"
+      },
+      {
+        "what": "Zeto_AnonEncNullifierNonRepudiation",
+        "hash": "0x93141157b54bd973be6bb4495fc5ba94fb4e4b34b1a6e413dfd740d26ad6632c",
+        "gasUsed": "3898787"
+      },
+      {
+        "what": "ERC1967Proxy",
+        "hash": "0xef27386468d89ca704c98e67db92de76345f18c00c1508d32381523112fbff64",
+        "gasUsed": "797346"
+      }
+    ]
+  },
+  "views": {
+    "T1": {
+      "authority": [
+        "14142328860428182665785213559704870889146396878891923612424925841635434772079",
+        "1465822051408877141596300828606581435735510948274115284477662490283199893804",
+        "60000",
+        "352773435183254059115858214685591433420016133918861538937283349734872541826",
+        "40000",
+        "7130651760222898580015574819838788722587500431083093780044879046146655779401",
+        "18324804113278800874234199818692371102183410489449071218869251280741489401996",
+        "13366130569019598439593960988709552562647870882885162966632394468566117879415",
+        "14142328860428182665785213559704870889146396878891923612424925841635434772079",
+        "1465822051408877141596300828606581435735510948274115284477662490283199893804",
+        "1000",
+        "14499619127876548532331952218962477723013524976988109837546865054329098508717",
+        "99000",
+        "5952028102495679670578272270029953678596423163921473285852492710526963402674"
+      ],
+      "authorityVerdict": {
+        "ok": true,
+        "reasons": []
+      },
+      "receiver": [
+        "1000",
+        "14499619127876548532331952218962477723013524976988109837546865054329098508717"
+      ],
+      "receiverVerdict": {
+        "ok": true,
+        "reasons": []
+      },
+      "observerAttempts": 9,
+      "observerVerdict": {
+        "ok": true,
+        "reasons": []
+      }
+    },
+    "T2": {
+      "authority": [
+        "18324804113278800874234199818692371102183410489449071218869251280741489401996",
+        "13366130569019598439593960988709552562647870882885162966632394468566117879415",
+        "1000",
+        "14499619127876548532331952218962477723013524976988109837546865054329098508717",
+        "0",
+        "0",
+        "14142328860428182665785213559704870889146396878891923612424925841635434772079",
+        "1465822051408877141596300828606581435735510948274115284477662490283199893804",
+        "18324804113278800874234199818692371102183410489449071218869251280741489401996",
+        "13366130569019598439593960988709552562647870882885162966632394468566117879415",
+        "600",
+        "5139623263105122441838472141780113933750635710446588626240088377348440644129",
+        "400",
+        "19317937064114555234965238106120229246419195120212018850101732329050372561767"
+      ],
+      "authorityVerdict": {
+        "ok": true,
+        "reasons": []
+      },
+      "receiver": [
+        "600",
+        "5139623263105122441838472141780113933750635710446588626240088377348440644129"
+      ],
+      "receiverVerdict": {
+        "ok": true,
+        "reasons": []
+      },
+      "observerAttempts": 9,
+      "observerVerdict": {
+        "ok": true,
+        "reasons": []
+      }
+    }
+  },
+  "rotation": [
+    {
+      "tx": "T1",
+      "key": "authority-K1",
+      "ok": true
+    },
+    {
+      "tx": "T1",
+      "key": "authority-K2",
+      "ok": false
+    },
+    {
+      "tx": "T2",
+      "key": "authority-K1",
+      "ok": false
+    },
+    {
+      "tx": "T2",
+      "key": "authority-K2",
+      "ok": true
+    }
+  ],
+  "txs": {
+    "MINT": {
+      "hash": "0xde8f4c5edbc8420e244456aa3e98caf7d060acdadf13dd2621454ff79f99d34f",
+      "from": "0xFd4D9DE66beBa13Aa52d1d24003F3082AF73b71b",
+      "block": 6021,
+      "gasUsed": "910618",
+      "inputs": [],
+      "outputs": [
+        "12523529931546291158684475885898700559418652296928711775008337520030854255440",
+        "20291031771658671111375997688223554149806558059290762069530192451992312513421"
+      ]
+    },
+    "T1": {
+      "hash": "0x495654d9fd08903a5904ae6d3e9cacf6745fbe5e7e4877dddd449f97fa2a1cfa",
+      "from": "0xE6bb7CB5A5Eb86A36066576da9d9AD0a74a1F685",
+      "block": 6024,
+      "gasUsed": "2208322",
+      "inputs": [
+        "12046654837650863818393772116441425638974391629009924682346748021113985666446",
+        "12443866669240002280504604310739235420681992342976922430754239322588272447613"
+      ],
+      "outputs": [
+        "7963853117982638715190328521851483606299890376063151554145709341013890459539",
+        "13324441726454916372945904185726047097950430126084733651677464174338170222448"
+      ]
+    },
+    "T2": {
+      "hash": "0xd540b57f45ea2ddbce8e404938526d1f9830d5d385808c715208a7f77f28648c",
+      "from": "0xD8bBcB2F2C526c786D3A04E3c2270b7c0D97e4Aa",
+      "block": 6028,
+      "gasUsed": "1861762",
+      "inputs": [
+        "11375971881560900706008530304769902606860365839229440838229497449505920396071",
+        "0"
+      ],
+      "outputs": [
+        "2849735897124488170074178257638824728177313809292061275904218957405329698170",
+        "2174370620193802356761088436620646777647613424353604072372492249461603077942"
+      ]
+    }
+  },
+  "arbiter": {
+    "set1": {
+      "hash": "0x996b9496653edd2d0199f59988f7c90d988e67b9712ae97b037540c9252d5faf",
+      "block": 6020,
+      "logs": 0
+    },
+    "set2": {
+      "hash": "0x6574f7f462ce7a45efaede74fc59c97db396551e6ad7b93ffdc795eb913ab66a",
+      "block": 6026,
+      "logs": 0
+    },
+    "staleT2": "Invalid proof"
+  },
+  "checks": [
+    {
+      "section": "0",
+      "label": "the verification key is an UNSAFE test key: vk_delta_2 equals vk_gamma_2 (E-5)",
+      "ok": true,
+      "detail": "nPublic=36"
+    },
+    {
+      "section": "1",
+      "label": "the proxy's EIP-1967 implementation slot points at the deployed implementation (UUPS, owner-upgradeable)",
+      "ok": true
+    },
+    {
+      "section": "1",
+      "label": "the deployed transfer verifier's runtime code equals the v0.2.2 release artifact (the UNSAFE-key verifier)",
+      "ok": true
+    },
+    {
+      "section": "1",
+      "label": "the issuer is the owner",
+      "ok": true
+    },
+    {
+      "section": "1",
+      "label": "the arbiter is NOT set at deploy: getArbiter() is (0, 0) until the owner calls setArbiter (E-4)",
+      "ok": true,
+      "detail": "getArbiter()=(0, 0)"
+    },
+    {
+      "section": "2",
+      "label": "setArbiter(K1) took effect: getArbiter() = K1",
+      "ok": true
+    },
+    {
+      "section": "2",
+      "label": "setArbiter emits no event: its receipt has 0 logs",
+      "ok": true
+    },
+    {
+      "section": "2",
+      "label": "a non-owner cannot set the arbiter: the call reverts OwnableUnauthorizedAccount",
+      "ok": true,
+      "detail": "revert: OwnableUnauthorizedAccount"
+    },
+    {
+      "section": "3",
+      "label": "the mint's on-chain outputs are the two commitments, and the desks' tree root equals getRoot()",
+      "ok": true
+    },
+    {
+      "section": "4",
+      "label": "T1 is accepted on chain, decodes as UTXOTransferNonRepudiation, and the tree root tracks getRoot()",
+      "ok": true
+    },
+    {
+      "section": "5",
+      "label": "control: before the rotation, the K1-proven T2 would be accepted (simulated)",
+      "ok": true
+    },
+    {
+      "section": "5",
+      "label": "the rotation emits no event: 0 logs in its receipt, 0 logs from the token in its block",
+      "ok": true
+    },
+    {
+      "section": "5",
+      "label": "no timelock: getArbiter() is K1 in the block before the rotation and K2 in the rotation's own block",
+      "ok": true
+    },
+    {
+      "section": "5",
+      "label": "after the rotation the same K1-proven T2 is rejected ('Invalid proof'): the key is read from storage at verify time",
+      "ok": true
+    },
+    {
+      "section": "5",
+      "label": "an observer reading transactions (not logs) sees the rotation: the setArbiter calldata carries the new key K2 in the clear",
+      "ok": true
+    },
+    {
+      "section": "5",
+      "label": "T2, proven for K2, is accepted after the rotation, and the tree root tracks getRoot()",
+      "ok": true
+    },
+    {
+      "section": "6",
+      "label": "detector control: the plaintext search finds K2 in the setArbiter calldata",
+      "ok": true
+    },
+    {
+      "section": "6",
+      "label": "T1: the authority decrypts exactly what E-4 says — input owner key, every input value and salt, every output owner key, value and salt — and each field checks against on-chain commitments",
+      "ok": true
+    },
+    {
+      "section": "6",
+      "label": "T1: the receiver's view is a strict subset of the authority's (F-4(b)): its own (value, salt) only; its key opens neither the authority envelope nor the other output",
+      "ok": true
+    },
+    {
+      "section": "6",
+      "label": "T1: the observer decrypts nothing — 9 attempts with keys it could hold all fail, and none of 16 secrets appears as a plain 32-byte word in calldata, log data or topics",
+      "ok": true
+    },
+    {
+      "section": "6",
+      "label": "T2: the authority decrypts exactly what E-4 says — input owner key, every input value and salt, every output owner key, value and salt — and each field checks against on-chain commitments",
+      "ok": true
+    },
+    {
+      "section": "6",
+      "label": "T2: the receiver's view is a strict subset of the authority's (F-4(b)): its own (value, salt) only; its key opens neither the authority envelope nor the other output",
+      "ok": true
+    },
+    {
+      "section": "6",
+      "label": "T2: the observer decrypts nothing — 9 attempts with keys it could hold all fail, and none of 16 secrets appears as a plain 32-byte word in calldata, log data or topics",
+      "ok": true
+    },
+    {
+      "section": "7",
+      "label": "each transfer opens only with the arbiter key set when it was proven: K1 keeps T1 after the rotation, K2 cannot read it",
+      "ok": true
+    },
+    {
+      "section": "8",
+      "label": "MINT: submitter in the event = tx.from = the desk's EOA, in an indexed topic",
+      "ok": true
+    },
+    {
+      "section": "8",
+      "label": "T1: submitter in the event = tx.from = the desk's EOA, in an indexed topic",
+      "ok": true
+    },
+    {
+      "section": "8",
+      "label": "T1: zero padding reveals the note count (2 in, 2 out)",
+      "ok": true,
+      "detail": "2/0 in, 2/0 out"
+    },
+    {
+      "section": "8",
+      "label": "T2: submitter in the event = tx.from = the desk's EOA, in an indexed topic",
+      "ok": true
+    },
+    {
+      "section": "8",
+      "label": "T2: zero padding reveals the note count (1 in, 2 out)",
+      "ok": true,
+      "detail": "1/1 in, 2/0 out"
+    },
+    {
+      "section": "8",
+      "label": "reconciliation: the live notes are A 99,600 (99,000 + 600) and B 400, summing to the 100,000 minted",
+      "ok": true
+    }
+  ],
+  "crashed": null
+}

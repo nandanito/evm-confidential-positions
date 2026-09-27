@@ -1,0 +1,154 @@
+================================================================================
+ NON-REPUDIATION AUDITOR VIEW — A STUDY ON A LOCAL DEVNET. NOT FOR VALUE.
+ - The Groth16 keys are Zeto v0.2.2's shipped UNSAFE test keys (no phase-2 setup;
+   delta = gamma). They give no soundness for real value (CLAIMS.md E-5, P-2).
+ - Zeto_AnonEncNullifierNonRepudiation is NOT on the Paladin devnet; it is deployed
+   here standalone, and this one process holds every desk's and authority's key.
+ - The authority key is set by the contract owner and can be rotated at any time
+   (P-7); the owner can also upgrade the contract (UUPS).
+ - The submitter EOA, timing, gas and note count are public (F-1, P-4, P-6).
+ - No public audit of Zeto or Paladin was found in the searched corpus (E-11).
+================================================================================
+
+--------------------------------------------------------------------------------
+0. Chain and source
+--------------------------------------------------------------------------------
+  base ledger   http://localhost:31545  chainId=1337  client=besu/v25.8.0/linux-aarch_64/openjdk-java-21  head=#6008
+  Zeto          v0.2.2 @ 5539a36487b004219a47642c2b32110df1b807db (the version Paladin v1.0.0 pins, CLAIMS E-2)
+  artifacts     /Users/nandan/Development/side-projects/evm-confidential-positions/artifacts/zeto-v0.2.2/MANIFEST.txt
+    sha256 faeafbf84d9ab8469c86483076c328ee080537a8ae0f85ac2a8e8d8df4631f51  zeto-contracts-v0.2.2.tar.gz
+    sha256 19b90bbb48f5944565448cd885a1a4f1bc11737795481cf7143377d38a5a5887  zeto-wasm-v0.2.2.tar.gz
+    sha256 97808b3c9e1068ffd2c79c21164210f8cea3e1801a163a38d8da26974ff4ade0  zeto-test-proving-keys-v0.2.2.tar.gz (streamed)
+    commit 5539a36487b004219a47642c2b32110df1b807db  zeto-src-v0.2.2.tar.gz (git get-tar-commit-id)
+    sha256 5eb45ec55ba1f413a25a141530fa3effa2dfa2c1f66130abcc21b5e7f83f7472  circuits/anon_enc_nullifier_non_repudiation_js/anon_enc_nullifier_non_repudiation.wasm
+    sha256 767952a88020514a2c3affff423d7261ffadfa4d4a6b47a3dac37b829050eabf  circuits/anon_enc_nullifier_non_repudiation.zkey
+    sha256 aae02f0bf46cdbd61fe538736bc0c255aeb77c59263a3c9daadb39f7fc8ce3c8  circuits/anon_enc_nullifier_non_repudiation-vkey.json
+    sha256 469dcb5dc90c4bf7943dde157d193461a6cae3789251190cde309019b2ad9862  contracts/artifacts/contracts/zeto_anon_enc_nullifier_non_repudiation.sol/Zeto_AnonEncNullifierNonRepudiation.json
+    sha256 127f7a8b425785b5765fe30a26500b1bef447f33f99f30889fd71583c565ec48  zkp-js/index.js
+    sha256 9caee3fb167299ad21ce6582ecde7a86965bbefb1aea7bdb7dbdaf72f8313e18  zkp-js/lib/util.js
+  PASS  [0] the verification key is an UNSAFE test key: vk_delta_2 equals vk_gamma_2 (E-5)
+        nPublic=36
+  EOA issuer   0xFd4D9DE66beBa13Aa52d1d24003F3082AF73b71b  (fresh, gasPrice 0)
+  EOA deskA    0xE6bb7CB5A5Eb86A36066576da9d9AD0a74a1F685  (fresh, gasPrice 0)
+  EOA deskB    0xD8bBcB2F2C526c786D3A04E3c2270b7c0D97e4Aa  (fresh, gasPrice 0)
+  EOA outsider 0xDce6b1de95e320F7b2d68e67074B34F21F19C5b6  (fresh, gasPrice 0)
+  Baby Jubjub keys (held in this process): deskA (1414232886…772079, 1465822051…893804)  deskB (1832480411…401996, 1336613056…879415)  K1 (1351794357…167704, 9827371534…364796)  K2 (6913124743…419276, 3514629309…247044)
+
+--------------------------------------------------------------------------------
+1. Deploy — Zeto v0.2.2 release artifacts behind a UUPS proxy, owned by the issuer
+--------------------------------------------------------------------------------
+  PoseidonUnit2L                                       0x59a443d441835f8e4fe9f94a662bca28d2cf4ab5a496678175f69ad7d2291911  gas 2157126
+  PoseidonUnit3L                                       0x3811f43c59137f42f609b7948740c796083cfe2df15408170cba2232bac250da  gas 2745274
+  SmtLib                                               0x96734a56b905281d9cc0ccfa4d1e065fb36195b9703a5edc3d86fc611adf6ac4  gas 2012368
+  Groth16Verifier_AnonEncNullifierNonRepudiation       0xf98d411bac818ff451bfc98a41ce5f64e79567e686dd736749b43a724e5e52dc  gas 1065023
+  Groth16Verifier_AnonEncNullifierNonRepudiationBatch  0xd1a7896de1523786c4c7ae3a4dd983ce3d7dd2549054f69be3c26217dac97cca  gas 3197765
+  Groth16Verifier_Deposit                              0x1005c0e675782104e81a15a7b393688267b98a38dd60b135ff68a8e95e9d338f  gas 390449
+  Groth16Verifier_WithdrawNullifier                    0xf44b7444fac3d85e6366e224963fded0319acf7b0ac7cfab5728bee0d41712ef  gas 470792
+  Groth16Verifier_WithdrawNullifierBatch               0xe0b9b5790ce9fb0b089324bfe8c892655a8553d01b2b8d0130266dc0a70f5f3d  gas 798555
+  Zeto_AnonEncNullifierNonRepudiation                  0x93141157b54bd973be6bb4495fc5ba94fb4e4b34b1a6e413dfd740d26ad6632c  gas 3898787
+  ERC1967Proxy                                         0xef27386468d89ca704c98e67db92de76345f18c00c1508d32381523112fbff64  gas 797346
+  token (proxy) 0xf717682420b1cc8508b7a513ca70ad1ea034eb08   implementation 0xa00d7a18810c06b44bab4485865f76a05b28eb8c
+  PASS  [1] the proxy's EIP-1967 implementation slot points at the deployed implementation (UUPS, owner-upgradeable)
+  PASS  [1] the deployed transfer verifier's runtime code equals the v0.2.2 release artifact (the UNSAFE-key verifier)
+  PASS  [1] the issuer is the owner
+  PASS  [1] the arbiter is NOT set at deploy: getArbiter() is (0, 0) until the owner calls setArbiter (E-4)
+        getArbiter()=(0, 0)
+
+--------------------------------------------------------------------------------
+2. Set the arbiter (K1) — what marks the change?
+--------------------------------------------------------------------------------
+  setArbiter(K1)  0x996b9496653edd2d0199f59988f7c90d988e67b9712ae97b037540c9252d5faf  block #6020  logs=0  gas 74343
+  PASS  [2] setArbiter(K1) took effect: getArbiter() = K1
+  PASS  [2] setArbiter emits no event: its receipt has 0 logs
+  PASS  [2] a non-owner cannot set the arbiter: the call reverts OwnableUnauthorizedAccount
+        revert: OwnableUnauthorizedAccount
+
+--------------------------------------------------------------------------------
+3. Mint — the issuer mints 100,000 to desk A as two notes (60,000 + 40,000)
+--------------------------------------------------------------------------------
+  mint 0xde8f4c5edbc8420e244456aa3e98caf7d060acdadf13dd2621454ff79f99d34f  by 0xFd4D9DE66beBa13Aa52d1d24003F3082AF73b71b  outputs 2  gas 910618
+  PASS  [3] the mint's on-chain outputs are the two commitments, and the desks' tree root equals getRoot()
+
+--------------------------------------------------------------------------------
+4. T1 — desk A -> desk B 1,000, spending both of A's notes, proven for K1
+--------------------------------------------------------------------------------
+  T1 0x495654d9fd08903a5904ae6d3e9cacf6745fbe5e7e4877dddd449f97fa2a1cfa  block #6024  submitter 0xE6bb7CB5A5Eb86A36066576da9d9AD0a74a1F685  gas 2208322 (observed in this run, data-dependent)
+  PASS  [4] T1 is accepted on chain, decodes as UTXOTransferNonRepudiation, and the tree root tracks getRoot()
+
+--------------------------------------------------------------------------------
+5. Rotate — the owner sets K2; a transfer proven for K1 is rejected; T2 under K2
+--------------------------------------------------------------------------------
+  Desk B proves T2 (B -> A 600) for the current arbiter K1, but has not submitted it yet.
+  PASS  [5] control: before the rotation, the K1-proven T2 would be accepted (simulated)
+  setArbiter(K2)  0x6574f7f462ce7a45efaede74fc59c97db396551e6ad7b93ffdc795eb913ab66a  block #6026  logs=0
+  PASS  [5] the rotation emits no event: 0 logs in its receipt, 0 logs from the token in its block
+  PASS  [5] no timelock: getArbiter() is K1 in the block before the rotation and K2 in the rotation's own block
+  the K1-proven T2, simulated after the rotation: Invalid proof
+  PASS  [5] after the rotation the same K1-proven T2 is rejected ('Invalid proof'): the key is read from storage at verify time
+  but the rotation tx itself is public: setArbiter(uint256[2]) from 0xFd4D9DE66beBa13Aa52d1d24003F3082AF73b71b, new key (6913124743…419276, 3514629309…247044) in the calldata
+  PASS  [5] an observer reading transactions (not logs) sees the rotation: the setArbiter calldata carries the new key K2 in the clear
+  T2 0xd540b57f45ea2ddbce8e404938526d1f9830d5d385808c715208a7f77f28648c  block #6028  submitter 0xD8bBcB2F2C526c786D3A04E3c2270b7c0D97e4Aa  gas 1861762 (observed in this run, data-dependent)
+  PASS  [5] T2, proven for K2, is accepted after the rotation, and the tree root tracks getRoot()
+
+--------------------------------------------------------------------------------
+6. Three views of each transfer — authority, receiver, full-chain observer
+--------------------------------------------------------------------------------
+  PASS  [6] detector control: the plaintext search finds K2 in the setArbiter calldata
+
+  T1
+    NON-REPUDIATION AUTHORITY (authority-K1) decrypts 14 fields from the 16-element envelope:
+      sender key (1414232886…772079, 1465822051…893804)  (deskA)
+      input 0: value 60000  salt 3527734351…541826  -> hashes to an earlier on-chain commitment: the non-repudiation authority names the note this nullifier spent
+      input 1: value 40000  salt 7130651760…779401  -> hashes to an earlier on-chain commitment: the non-repudiation authority names the note this nullifier spent
+      output 0: owner deskB  value 1000  salt 1449961912…508717  -> hashes to on-chain output 0
+      output 1: owner deskA  value 99000  salt 5952028102…402674  -> hashes to on-chain output 1
+  PASS  [6] T1: the authority decrypts exactly what E-4 says — input owner key, every input value and salt, every output owner key, value and salt — and each field checks against on-chain commitments
+    RECEIVER (deskB) decrypts its own slot only: value 1000  salt 1449961912…508717   (2 fields; the authority got 14)
+  PASS  [6] T1: the receiver's view is a strict subset of the authority's (F-4(b)): its own (value, salt) only; its key opens neither the authority envelope nor the other output
+    OBSERVER sees: submitter 0xE6bb7CB5A5Eb86A36066576da9d9AD0a74a1F685 (indexed), block #6024 t=1790505143, gas 2208322, calldata 1604 B,
+      nullifiers 1204665483…666446, 1244386666…447613  outputs 7963853117…459539, 1332444172…222448
+      encryptionNonce 1064738751…414158  ecdhPublicKey (9054291138…810690, 1903246889…054251)  8 receiver + 16 authority ciphertext elements, the Groth16 proof
+  PASS  [6] T1: the observer decrypts nothing — 9 attempts with keys it could hold all fail, and none of 16 secrets appears as a plain 32-byte word in calldata, log data or topics
+
+  T2
+    NON-REPUDIATION AUTHORITY (authority-K2) decrypts 14 fields from the 16-element envelope:
+      sender key (1832480411…401996, 1336613056…879415)  (deskB)
+      input 0: value 1000  salt 1449961912…508717  -> hashes to an earlier on-chain commitment: the non-repudiation authority names the note this nullifier spent
+      input 1: value 0  salt 0  (zero padding)
+      output 0: owner deskA  value 600  salt 5139623263…644129  -> hashes to on-chain output 0
+      output 1: owner deskB  value 400  salt 1931793706…561767  -> hashes to on-chain output 1
+  PASS  [6] T2: the authority decrypts exactly what E-4 says — input owner key, every input value and salt, every output owner key, value and salt — and each field checks against on-chain commitments
+    RECEIVER (deskA) decrypts its own slot only: value 600  salt 5139623263…644129   (2 fields; the authority got 14)
+  PASS  [6] T2: the receiver's view is a strict subset of the authority's (F-4(b)): its own (value, salt) only; its key opens neither the authority envelope nor the other output
+    OBSERVER sees: submitter 0xD8bBcB2F2C526c786D3A04E3c2270b7c0D97e4Aa (indexed), block #6028 t=1790505179, gas 1861762, calldata 1604 B,
+      nullifiers 1137597188…396071, 0  outputs 2849735897…698170, 2174370620…077942
+      encryptionNonce 4967340304…498919  ecdhPublicKey (1909090587…112067, 1503535925…495165)  8 receiver + 16 authority ciphertext elements, the Groth16 proof
+  PASS  [6] T2: the observer decrypts nothing — 9 attempts with keys it could hold all fail, and none of 16 secrets appears as a plain 32-byte word in calldata, log data or topics
+
+--------------------------------------------------------------------------------
+7. Rotation matrix — which authority key opens which transfer
+--------------------------------------------------------------------------------
+  T1 (proven for authority-K1) with authority-K1: OPENS
+  T1 (proven for authority-K1) with authority-K2: does not open
+  T2 (proven for authority-K2) with authority-K1: does not open
+  T2 (proven for authority-K2) with authority-K2: OPENS
+  PASS  [7] each transfer opens only with the arbiter key set when it was proven: K1 keeps T1 after the rotation, K2 cannot read it
+
+--------------------------------------------------------------------------------
+8. Leaks and reconciliation
+--------------------------------------------------------------------------------
+  PASS  [8] MINT: submitter in the event = tx.from = the desk's EOA, in an indexed topic
+  PASS  [8] T1: submitter in the event = tx.from = the desk's EOA, in an indexed topic
+  PASS  [8] T1: zero padding reveals the note count (2 in, 2 out)
+        2/0 in, 2/0 out
+  PASS  [8] T2: submitter in the event = tx.from = the desk's EOA, in an indexed topic
+  PASS  [8] T2: zero padding reveals the note count (1 in, 2 out)
+        1/1 in, 2/0 out
+  NR transfer gas, observed in this run (data-dependent, E-10): 2208322 · 1861762  range 1861762–2208322
+  PASS  [8] reconciliation: the live notes are A 99,600 (99,000 + 600) and B 400, summing to the 100,000 minted
+
+--------------------------------------------------------------------------------
+Summary
+--------------------------------------------------------------------------------
+  30/30 checks passed.
+  What this run does NOT show is listed in example/README.md (what is NOT hidden / NOT demonstrated).

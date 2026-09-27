@@ -1,0 +1,432 @@
+{
+  "date": "2026-09-27T10:34:47.578Z",
+  "besuRpc": "http://localhost:31545",
+  "nodes": [
+    {
+      "id": "node1",
+      "url": "http://localhost:31548"
+    },
+    {
+      "id": "node2",
+      "url": "http://localhost:31648"
+    },
+    {
+      "id": "node3",
+      "url": "http://localhost:31748"
+    }
+  ],
+  "chain": {
+    "chainId": "1337",
+    "client": "besu/v25.8.0/linux-aarch_64/openjdk-java-21",
+    "head": 6038
+  },
+  "control": {
+    "token": "0x2670de4e16fe9faf0946be62dd498e9ba91115ef",
+    "c0": "0x001b06f1f10aafd56b706ab8e9181c3fd4affc2f8ccf47c991882c95d8f9c1bd",
+    "replay": {
+      "replayHash": "0x422bc3970b4e572585dca823789ce56c40ec1281f2c69c13273fd5352cc4410d",
+      "replayFrom": "0x1FD4EaF4505c702D5EA1F106D3D7c303e4e99B6e",
+      "originalFrom": "0xC5C2dc790a15C3552E298ceAE878aa9eF4ed74c6",
+      "simulated": {
+        "reverted": true,
+        "error": "UTXOAlreadySpent",
+        "args": [
+          "16053429174916210537492993211514036397776287387247475744708156462107955364995"
+        ],
+        "raw": "0x41a06d28237deb3e5a2c7813d6d97f605485b8e2ba6570a78d5de96ac0367b61920d0483"
+      },
+      "receiptStatus": 0,
+      "receiptLogs": 0,
+      "gasUsed": "38515",
+      "blockNumber": 6043
+    },
+    "rootBefore": "2768033257805901253204712843290757734401947180945567068817626941638176195739",
+    "rootAfter": "2768033257805901253204712843290757734401947180945567068817626941638176195739",
+    "verdict": {
+      "ok": true,
+      "reasons": []
+    }
+  },
+  "runs": {
+    "Zeto_AnonNullifier": {
+      "token": "0x35684802df8d39c1e8db9f315733289f0aa9e653",
+      "steps": [
+        {
+          "label": "MINT",
+          "hash": "0xdc984726ef1a0954200ce982b50c3580ca6f2e2099eb572c5644ae47584dedc6",
+          "from": "0xE0cA21cCc6F653322D8C4EC78B45Dfd645a3d2F0",
+          "block": 6045,
+          "blockTime": 1790505313,
+          "gasUsed": "396399",
+          "inputs": [],
+          "outputs": [
+            "15520132240660194985782837869848990204899008510455519265070452180741364763360"
+          ],
+          "nodeSpent": [],
+          "nodeCreated": [
+            "0x22501563aa56f6b6a8e9d77aef10ef28f3683c42499ff30d6d9ebd1d8749cae0"
+          ]
+        },
+        {
+          "label": "T1",
+          "hash": "0xa95953037df67be3ef62a59a26f54e7dc8a30185333d3b098e3732eeb7daa66a",
+          "from": "0x1507184E6c47d3083ab891c0d0913F0e31BA717d",
+          "block": 6049,
+          "blockTime": 1790505328,
+          "gasUsed": "1821641",
+          "inputs": [
+            "13611516885045257985235639695808680486331273488297778331300867092289034596393",
+            "0"
+          ],
+          "outputs": [
+            "18239673888323682211703862005326915763299411874977677074168987985529095669028",
+            "14144327457229597220811549161064415229759639083084967512747690635456539719608"
+          ],
+          "nodeSpent": [
+            "0x22501563aa56f6b6a8e9d77aef10ef28f3683c42499ff30d6d9ebd1d8749cae0"
+          ],
+          "nodeCreated": [
+            "0x28534a21bb24c105ff4d10684c5118bbaec8701f48e80e5b5d2b2f8b89d94524",
+            "0x1f4567d8045585ca19fcc80e27609b5047049b8065bcd24925a86ab09822f7b8"
+          ]
+        },
+        {
+          "label": "T2",
+          "hash": "0x49702611db8cd81bd0e4a5367631dce0c342e2d7f59195700e3d37dc30c16b8e",
+          "from": "0x1507184E6c47d3083ab891c0d0913F0e31BA717d",
+          "block": 6051,
+          "blockTime": 1790505345,
+          "gasUsed": "1818755",
+          "inputs": [
+            "7397121496729820601250483310849581795084947653402716383962386773614338580926",
+            "0"
+          ],
+          "outputs": [
+            "11294377979272965654333376916451362194029215603143979009234146866479031487946",
+            "11338635317027454109547486081104045632124359923860444961355692423259064031464"
+          ],
+          "nodeSpent": [
+            "0x1f4567d8045585ca19fcc80e27609b5047049b8065bcd24925a86ab09822f7b8"
+          ],
+          "nodeCreated": [
+            "0x18f86432b0677374967fca0e5f05815f1e82316ff6bcfdacd7b5eb33b81d8dca",
+            "0x191170ae954c7fb14c65178c4527f203156e4dd752bdd1a95513054c4906d8e8"
+          ]
+        },
+        {
+          "label": "T3",
+          "hash": "0x5488f45ffb7ef0e780b213e5d0943902dc3842dc2fa207cfb209e05019ddedca",
+          "from": "0x37A5626E2352Fd75A5428308338967a2c25be9bA",
+          "block": 6052,
+          "blockTime": 1790505355,
+          "gasUsed": "1809974",
+          "inputs": [
+            "7829779651251417827728671853523049559669211046191634210294344696031332562448",
+            "11236973722260068333228054148853058472039666373995887555136194537424314010434"
+          ],
+          "outputs": [
+            "4806896251935868544154111292572221459155703350340315447886850302155405582212",
+            "19475967313963133742508606564129195302520734144469228962726957925508214825097"
+          ],
+          "nodeSpent": [
+            "0x28534a21bb24c105ff4d10684c5118bbaec8701f48e80e5b5d2b2f8b89d94524",
+            "0x18f86432b0677374967fca0e5f05815f1e82316ff6bcfdacd7b5eb33b81d8dca"
+          ],
+          "nodeCreated": [
+            "0x0aa09b5b6f188cf63f055fd518cc8c8b0e7a134e5408e2fb341119c5ed2adf84",
+            "0x2b0f01c183f0c0718c300e12763102fd2e9ed4c137f427f851b91c605d462089"
+          ]
+        }
+      ]
+    },
+    "Zeto_Anon": {
+      "token": "0xac9a16329ea9feaf9f2c5dde7647fc8f4db33160",
+      "steps": [
+        {
+          "label": "MINT",
+          "hash": "0xef15781abc792161adb1536c9b6000404370a746294cd278266419bb686e730a",
+          "from": "0xE0cA21cCc6F653322D8C4EC78B45Dfd645a3d2F0",
+          "block": 6047,
+          "blockTime": 1790505315,
+          "gasUsed": "60279",
+          "inputs": [],
+          "outputs": [
+            "6655602022394012951495465151255285323442528447704559358423410040920625409963"
+          ],
+          "nodeSpent": [],
+          "nodeCreated": [
+            "0x0eb6efef947551851273a244537d35293f3c584554c179be2eecf3c0b23c6fab"
+          ]
+        },
+        {
+          "label": "T1",
+          "hash": "0x3f8808f36169f8d33d54c53c09c11e61c1858d2efc60855a37f1d5e036e4e3e4",
+          "from": "0xC3Ec345A97002d0C878232443accB5dd6ab3dAE0",
+          "block": 6053,
+          "blockTime": 1790505360,
+          "gasUsed": "321643",
+          "inputs": [
+            "6655602022394012951495465151255285323442528447704559358423410040920625409963",
+            "0"
+          ],
+          "outputs": [
+            "8394500901312941745788220689273260412732873047994981189751455177515398663612",
+            "19691222456729724865308226847774660218806254161159024035595281276813539553033"
+          ],
+          "nodeSpent": [
+            "0x0eb6efef947551851273a244537d35293f3c584554c179be2eecf3c0b23c6fab"
+          ],
+          "nodeCreated": [
+            "0x128f1e7fc0423c115f7879cdf7fc508fa26e9ffb90cbbfa22929f399d2910dbc",
+            "0x2b88d64282b42c38ce2fdadc58b7c9f472a2da8152063f9a0fb8871a77e02f09"
+          ]
+        },
+        {
+          "label": "T2",
+          "hash": "0x169c045520b22ff033a04b9d2013c21f520fc8ffdad8b27095265a2ed81abd2b",
+          "from": "0xC3Ec345A97002d0C878232443accB5dd6ab3dAE0",
+          "block": 6054,
+          "blockTime": 1790505365,
+          "gasUsed": "321655",
+          "inputs": [
+            "19691222456729724865308226847774660218806254161159024035595281276813539553033",
+            "0"
+          ],
+          "outputs": [
+            "1371141725040186609944394600155920185618811325178794081773889590829299272338",
+            "4313083333271830605380158148443526653870235961635991653009858384837000632247"
+          ],
+          "nodeSpent": [
+            "0x2b88d64282b42c38ce2fdadc58b7c9f472a2da8152063f9a0fb8871a77e02f09"
+          ],
+          "nodeCreated": [
+            "0x030809e9332834342f3392be7bd16d25206a984ce69746c9dd4213c92b680a92",
+            "0x09891e604830ae050292d60b3898e2701d9286d78a11ac756946e4ddd1a517b7"
+          ]
+        },
+        {
+          "label": "T3",
+          "hash": "0x7df3546fcfa91f3b48f790c157724f06eb11f71316342b20d7b0f6c1bed27c1c",
+          "from": "0x02889ad8a0d1f0dcaa56A866B6e63E4f744B002a",
+          "block": 6055,
+          "blockTime": 1790505370,
+          "gasUsed": "330950",
+          "inputs": [
+            "8394500901312941745788220689273260412732873047994981189751455177515398663612",
+            "1371141725040186609944394600155920185618811325178794081773889590829299272338"
+          ],
+          "outputs": [
+            "16331381232426325232170974643312360262112501460316655291376327867048050005797",
+            "4048978983636828851321505192463641190655395117386141313893052867937115337954"
+          ],
+          "nodeSpent": [
+            "0x128f1e7fc0423c115f7879cdf7fc508fa26e9ffb90cbbfa22929f399d2910dbc",
+            "0x030809e9332834342f3392be7bd16d25206a984ce69746c9dd4213c92b680a92"
+          ],
+          "nodeCreated": [
+            "0x241b3bf52a5596523576518988ea927a213ff074d7bb2e6929b3b9cc0e539725",
+            "0x08f3a4118047fa5d135dbe02803091ab0f5499a2cd546ccaf7cc7adcaa3874e2"
+          ]
+        }
+      ]
+    }
+  },
+  "checks": [
+    {
+      "section": "1",
+      "label": "replay of a spent note is rejected on chain with UTXOAlreadySpent(its nullifier), status 0, root unchanged",
+      "ok": true
+    },
+    {
+      "section": "1",
+      "label": "no desk was credited twice: A=9900, B=100 after the replay",
+      "ok": true,
+      "detail": "A=9900 B=100"
+    },
+    {
+      "section": "4c",
+      "label": "Zeto_AnonNullifier MINT: submitter in the event equals tx.from and is an indexed topic",
+      "ok": true
+    },
+    {
+      "section": "4c",
+      "label": "Zeto_AnonNullifier T1: submitter in the event equals tx.from and is an indexed topic",
+      "ok": true
+    },
+    {
+      "section": "4c",
+      "label": "Zeto_AnonNullifier T1: zero padding reveals the real note count (1 in, 2 out), matching the node's receipt",
+      "ok": true,
+      "detail": "node spent=1"
+    },
+    {
+      "section": "4c",
+      "label": "Zeto_AnonNullifier T2: submitter in the event equals tx.from and is an indexed topic",
+      "ok": true
+    },
+    {
+      "section": "4c",
+      "label": "Zeto_AnonNullifier T2: zero padding reveals the real note count (1 in, 2 out), matching the node's receipt",
+      "ok": true,
+      "detail": "node spent=1"
+    },
+    {
+      "section": "4c",
+      "label": "Zeto_AnonNullifier T3: submitter in the event equals tx.from and is an indexed topic",
+      "ok": true
+    },
+    {
+      "section": "4c",
+      "label": "Zeto_AnonNullifier T3: zero padding reveals the real note count (2 in, 2 out), matching the node's receipt",
+      "ok": true,
+      "detail": "node spent=2"
+    },
+    {
+      "section": "4c",
+      "label": "Zeto_AnonNullifier: every tx's block timestamp is public and non-decreasing",
+      "ok": true,
+      "detail": "timestamps 1790505313, 1790505328, 1790505345, 1790505355"
+    },
+    {
+      "section": "4c",
+      "label": "Zeto_AnonNullifier: no amount or owner key (13 secrets) appears as a plain 32-byte word in any calldata, log data or topic",
+      "ok": true
+    },
+    {
+      "section": "4c",
+      "label": "Zeto_Anon MINT: submitter in the event equals tx.from and is an indexed topic",
+      "ok": true
+    },
+    {
+      "section": "4c",
+      "label": "Zeto_Anon T1: submitter in the event equals tx.from and is an indexed topic",
+      "ok": true
+    },
+    {
+      "section": "4c",
+      "label": "Zeto_Anon T1: zero padding reveals the real note count (1 in, 2 out), matching the node's receipt",
+      "ok": true,
+      "detail": "node spent=1"
+    },
+    {
+      "section": "4c",
+      "label": "Zeto_Anon T2: submitter in the event equals tx.from and is an indexed topic",
+      "ok": true
+    },
+    {
+      "section": "4c",
+      "label": "Zeto_Anon T2: zero padding reveals the real note count (1 in, 2 out), matching the node's receipt",
+      "ok": true,
+      "detail": "node spent=1"
+    },
+    {
+      "section": "4c",
+      "label": "Zeto_Anon T3: submitter in the event equals tx.from and is an indexed topic",
+      "ok": true
+    },
+    {
+      "section": "4c",
+      "label": "Zeto_Anon T3: zero padding reveals the real note count (2 in, 2 out), matching the node's receipt",
+      "ok": true,
+      "detail": "node spent=2"
+    },
+    {
+      "section": "4c",
+      "label": "Zeto_Anon: every tx's block timestamp is public and non-decreasing",
+      "ok": true,
+      "detail": "timestamps 1790505315, 1790505360, 1790505365, 1790505370"
+    },
+    {
+      "section": "4c",
+      "label": "Zeto_Anon: no amount or owner key (13 secrets) appears as a plain 32-byte word in any calldata, log data or topic",
+      "ok": true
+    },
+    {
+      "section": "4b",
+      "label": "Zeto_AnonNullifier: ground truth is non-vacuous — desk B's node reports T3 spent its notes from T1 and T2",
+      "ok": true,
+      "detail": "true spends from T1, T2"
+    },
+    {
+      "section": "4b",
+      "label": "Zeto_AnonNullifier: no on-chain value equality links T3 (or any tx) to the notes it spent — nullifiers, not commitments, are published",
+      "ok": true
+    },
+    {
+      "section": "4b",
+      "label": "Zeto_Anon: ground truth is non-vacuous — desk B's node reports T3 spent its notes from T1 and T2",
+      "ok": true,
+      "detail": "true spends from T1, T2"
+    },
+    {
+      "section": "4b",
+      "label": "Zeto_Anon (foil): T3's inputs ARE the commitments T1 and T2 created — linkable on chain",
+      "ok": true,
+      "detail": "T3 links: 1371141725…272338, 8394500901…663612"
+    },
+    {
+      "section": "5",
+      "label": "Zeto_AnonNullifier: deskA's node balance equals the book (99800)",
+      "ok": true,
+      "detail": "node says 99800 in 2 note(s)"
+    },
+    {
+      "section": "5",
+      "label": "Zeto_AnonNullifier: deskB's node balance equals the book (200)",
+      "ok": true,
+      "detail": "node says 200 in 1 note(s)"
+    },
+    {
+      "section": "5",
+      "label": "Zeto_AnonNullifier: positions are conserved — desk balances sum to the 100000 minted",
+      "ok": true,
+      "detail": "sum=100000"
+    },
+    {
+      "section": "5",
+      "label": "Zeto_AnonNullifier: live on-chain commitments (3) = notes the desks' nodes hold (3)",
+      "ok": true
+    },
+    {
+      "section": "5",
+      "label": "Zeto_AnonNullifier: every live commitment opens (node-private) to a coin, and the openings sum to the mint",
+      "ok": true,
+      "detail": "sum of openings=100000"
+    },
+    {
+      "section": "5",
+      "label": "Zeto_Anon: deskA's node balance equals the book (99800)",
+      "ok": true,
+      "detail": "node says 99800 in 2 note(s)"
+    },
+    {
+      "section": "5",
+      "label": "Zeto_Anon: deskB's node balance equals the book (200)",
+      "ok": true,
+      "detail": "node says 200 in 1 note(s)"
+    },
+    {
+      "section": "5",
+      "label": "Zeto_Anon: positions are conserved — desk balances sum to the 100000 minted",
+      "ok": true,
+      "detail": "sum=100000"
+    },
+    {
+      "section": "5",
+      "label": "Zeto_Anon: live on-chain commitments (3) = notes the desks' nodes hold (3)",
+      "ok": true
+    },
+    {
+      "section": "5",
+      "label": "Zeto_Anon: every live commitment opens (node-private) to a coin, and the openings sum to the mint",
+      "ok": true,
+      "detail": "sum of openings=100000"
+    },
+    {
+      "section": "6",
+      "label": "observer output: T3 decoded against the v0.2.2 ABI, status 1, tx.to is the token",
+      "ok": true
+    }
+  ],
+  "crashed": null
+}

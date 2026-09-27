@@ -1,0 +1,40 @@
+{
+  "label": "anon (Zeto_Anon, no nullifier/no enc)",
+  "circuit": "anon",
+  "allProofsVerified": true,
+  "witness_calc_ms": {
+    "runs": 20,
+    "min": 39.5,
+    "median": 41.9,
+    "max": 54.4
+  },
+  "prove_ms": {
+    "runs": 20,
+    "min": 250.7,
+    "median": 326.2,
+    "max": 563.3
+  },
+  "proof_wire_bytes": 256,
+  "proof_json_bytes": 725,
+  "vkey_public_signal_count": 4
+}
+{
+  "label": "anon_enc (Zeto_AnonEnc, ECDH-encrypted values)",
+  "circuit": "anon_enc",
+  "allProofsVerified": true,
+  "witness_calc_ms": {
+    "runs": 20,
+    "min": 80.9,
+    "median": 89.7,
+    "max": 380.8
+  },
+  "prove_ms": {
+    "runs": 20,
+    "min": 724,
+    "median": 850.8,
+    "max": 1619.9
+  },
+  "proof_wire_bytes": 256,
+  "proof_json_bytes": 721,
+  "vkey_public_signal_count": 15
+}

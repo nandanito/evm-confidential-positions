@@ -1,0 +1,57 @@
+================================================================================
+ STUDY ON A LOCAL DEVNET. NOT FOR VALUE.
+ - The Groth16 verifiers use Zeto's shipped UNSAFE test keys (no phase-2 setup;
+   delta = gamma). They give no soundness for real value (CLAIMS.md E-5, P-2).
+ - Each Paladin node holds every key and all plaintext for its desks (E-8, P-10).
+ - The submitter EOA, timing, gas and note count are public (F-1, P-4, P-6).
+ - No public audit of Zeto or Paladin was found in the searched corpus (E-11).
+================================================================================
+
+--------------------------------------------------------------------------------
+0. Chain and source
+--------------------------------------------------------------------------------
+  base ledger   http://localhost:31545  chainId=1337  client=besu/v25.8.0/linux-aarch_64/openjdk-java-21  head=#5945
+  paladin node  node1 http://localhost:31548
+  paladin node  node2 http://localhost:31648
+  paladin node  node3 http://localhost:31748
+  Paladin v1.0.0 pins Zeto v0.2.2 (CLAIMS E-2); the ABIs used to decode are the v0.2.2 ones.
+  The Paladin version is not re-read by this script; E-3 records the install.
+  parties       issuer=centraldesk@node3  deskA=deskA@node1  deskB=deskB@node2
+
+--------------------------------------------------------------------------------
+1. Adversarial control — a second spend of an already-spent note (arm a)
+--------------------------------------------------------------------------------
+  A fresh control token; desk A spends one note to desk B; then the SAME mined
+  transfer (the node's own valid proof, unmodified) is resubmitted from a fresh EOA.
+  control token 0x9ac6f75062c0b75a60b4cc45290dd0343be7c509 (Zeto_AnonNullifier)
+  C0 mined      0x3424fbc5005c707bbb57b6f565bcb3411c2936adc0b88083b727820e8d69e7d1  real nullifiers=1
+  replay        0x675f7a97e263737b10eba523742f4772d19f908f8e8af8a17eb78157ba8e5887 from 0xf5dc4b2730Cb2998D8842F398c51Df5E450Fb2Cf
+  simulated     UTXOAlreadySpent(2591890947…492157)
+  mined         status=0 logs=0 block=#5952
+  PASS  [1] replay of a spent note is rejected on chain with UTXOAlreadySpent(its nullifier), status 0, root unchanged
+  PASS  [1] no desk was credited twice: A=9900, B=100 after the replay
+        A=9900 B=100
+
+--------------------------------------------------------------------------------
+2. Deploy + mint — Zeto_AnonNullifier (primary) and Zeto_Anon (linkability foil)
+--------------------------------------------------------------------------------
+  Zeto_AnonNullifier  token 0xb821c956a25a46803dd3cd8cd3fe6fdeed94bd2e  mint 0x992a2558b73bd67187c91435ca8a46d0e0330a30e4275ca303114dff3d000206
+    mint caller (public)  0xE0cA21cCc6F653322D8C4EC78B45Dfd645a3d2F0   outputs on chain: 1 commitment(s) (amount: see the §4 plaintext check)
+  Zeto_Anon           token 0x556213ee35cd433f681d0ac2ed2c09bd88243fe2  mint 0x131e7735bd35de60738e57a81503722409004ebfca4d5c0c623d2590f24ef486
+    mint caller (public)  0xE0cA21cCc6F653322D8C4EC78B45Dfd645a3d2F0   outputs on chain: 1 commitment(s) (amount: see the §4 plaintext check)
+
+--------------------------------------------------------------------------------
+3. Confidential transfers — T1, T2: A -> B; T3: B -> A spending both of B's notes
+--------------------------------------------------------------------------------
+
+ERROR: Error: Zeto_AnonNullifier transfer 1000 deskA@node1 -> deskB@node2 failed: undefined
+    at toReceipt (/Users/nandan/Development/side-projects/evm-confidential-positions/example/src/paladin.ts:66:26)
+    at Token.transfer (/Users/nandan/Development/side-projects/evm-confidential-positions/example/src/paladin.ts:105:12)
+    at async main (/Users/nandan/Development/side-projects/evm-confidential-positions/example/run.ts:118:17)
+    at async <anonymous> (/Users/nandan/Development/side-projects/evm-confidential-positions/example/run.ts:245:3)
+
+--------------------------------------------------------------------------------
+Summary
+--------------------------------------------------------------------------------
+  2/2 checks passed; the run CRASHED before finishing.
+  What this run does NOT show is listed in example/README.md (what is NOT hidden / NOT demonstrated).

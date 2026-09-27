@@ -1,0 +1,21 @@
+{
+  "name": "observer-harness",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "observe": "tsx observe.ts",
+    "bench": "node bench-proof.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@lfdecentralizedtrust/paladin-sdk": "1.0.0",
+    "circomlibjs": "0.1.7",
+    "ethers": "6.13.4",
+    "snarkjs": "0.7.5"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.4",
+    "tsx": "4.19.2",
+    "typescript": "5.6.3"
+  }
+}

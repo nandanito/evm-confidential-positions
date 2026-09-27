@@ -1,0 +1,62 @@
+================================================================================
+ STUDY ON A LOCAL DEVNET. NOT FOR VALUE.
+ - The Groth16 verifiers use Zeto's shipped UNSAFE test keys (no phase-2 setup;
+   delta = gamma). They give no soundness for real value (CLAIMS.md E-5, P-2).
+ - Each Paladin node holds every key and all plaintext for its desks (E-8, P-10).
+ - The submitter EOA, timing, gas and note count are public (F-1, P-4, P-6).
+ - No public audit of Zeto or Paladin was found in the searched corpus (E-11).
+================================================================================
+
+--------------------------------------------------------------------------------
+0. Chain and source
+--------------------------------------------------------------------------------
+  base ledger   http://localhost:31545  chainId=1337  client=besu/v25.8.0/linux-aarch_64/openjdk-java-21  head=#5894
+  paladin node  node1 http://localhost:31548
+  paladin node  node2 http://localhost:31648
+  paladin node  node3 http://localhost:31748
+  Paladin v1.0.0 pins Zeto v0.2.2 (CLAIMS E-2); the ABIs used to decode are the v0.2.2 ones.
+  The Paladin version is not re-read by this script; E-3 records the install.
+  parties       issuer=centraldesk@node3  deskA=deskA@node1  deskB=deskB@node2
+
+--------------------------------------------------------------------------------
+1. Adversarial control — a second spend of an already-spent note (arm a)
+--------------------------------------------------------------------------------
+  A fresh control token; desk A spends one note to desk B; then the SAME mined
+  transfer (the node's own valid proof, unmodified) is resubmitted from a fresh EOA.
+  control token 0x68f2d2d58ce5fcc4140084acf823931d5b36ade6 (Zeto_AnonNullifier)
+  C0 mined      0x9f56328d82441c685819825afff87ffc3c55d8b0c6a231ba63d1e926179f320f  real nullifiers=1
+  replay        0xc158d838a313c9f56496b8f61b10ae64a4892a73db478e377014bea4e4df8af2 from 0x3253bE05E8c4b70Ff60937f06323e0524148EB8F
+  simulated     UTXOAlreadySpent(5987898299…877456)
+  mined         status=0 logs=0 block=#5898
+  PASS  [1] replay of a spent note is rejected on chain with UTXOAlreadySpent(its nullifier), status 0, root unchanged
+  PASS  [1] no desk was credited twice: A=9900, B=100 after the replay
+        A=9900 B=100
+
+--------------------------------------------------------------------------------
+2. Deploy + mint — Zeto_AnonNullifier (primary) and Zeto_Anon (linkability foil)
+--------------------------------------------------------------------------------
+  Zeto_AnonNullifier  token 0x3e6430afbb5e2bb215d60cdec496de0ad7b65917  mint 0x5dc870afb079ba36cb73c131517dd98e943632dc5bb56e64b823600f3e368d43
+    mint caller (public)  0xE0cA21cCc6F653322D8C4EC78B45Dfd645a3d2F0   outputs on chain: 1 commitment(s) (amount: see the §4 plaintext check)
+  Zeto_Anon           token 0x38f90d56d94fa121320b784b68c8b91798858ee7  mint 0x772a4d3c55cf670313ba0b3bd8a0b4c3c6d258bd8bc8c97b150d945063284ed4
+    mint caller (public)  0xE0cA21cCc6F653322D8C4EC78B45Dfd645a3d2F0   outputs on chain: 1 commitment(s) (amount: see the §4 plaintext check)
+
+--------------------------------------------------------------------------------
+3. Confidential transfers — T1, T2: A -> B; T3: B -> A spending both of B's notes
+--------------------------------------------------------------------------------
+  Zeto_AnonNullifier  T1 deskA->deskB  0x1db8e227c5d5855b59f00507878a5f85d4245eaa97dfe8c034391bfd5f351196  block #5903
+  Zeto_AnonNullifier  T2 deskA->deskB  0x9715ecda26d8f9cedce6c36e553813336799793d54844f3e74e0a4751d6899e8  block #5904
+  Zeto_AnonNullifier  T3 deskB->deskA  0x725841615da51086ba8017ae55c312fc32d0ac3f84a5c90ade66e8fc500c3101  block #5910
+  Zeto_Anon           T1 deskA->deskB  0x92cfbaa8013e9a7b16dfe42427a9ce9aefbec4b82cca590b2e3f07a2927859f1  block #5913
+  Zeto_Anon           T2 deskA->deskB  0x2e9b7ddd9717cd0d3cfbf49fb3f49351753e7dbe2ded08215be95b015bff1a0b  block #5915
+
+ERROR: Error: Zeto_Anon transfer 1500 deskB@node2 -> deskA@node1 failed: undefined
+    at toReceipt (/Users/nandan/Development/side-projects/evm-confidential-positions/example/src/paladin.ts:66:26)
+    at Token.transfer (/Users/nandan/Development/side-projects/evm-confidential-positions/example/src/paladin.ts:105:12)
+    at async main (/Users/nandan/Development/side-projects/evm-confidential-positions/example/run.ts:118:17)
+    at async <anonymous> (/Users/nandan/Development/side-projects/evm-confidential-positions/example/run.ts:245:3)
+
+--------------------------------------------------------------------------------
+Summary
+--------------------------------------------------------------------------------
+  2/2 checks passed; the run CRASHED before finishing.
+  What this run does NOT show is listed in example/README.md (what is NOT hidden / NOT demonstrated).
